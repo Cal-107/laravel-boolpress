@@ -26,7 +26,7 @@ Route::middleware('auth')
         Route::get('/', 'HomeController@index')->name('home');
 
         //posts resource route
-
+        Route::resource('/posts', 'PostController');
     });
 
 
