@@ -8,6 +8,12 @@
         <p>No post found yet. <a href=" {{ route('admin.posts.create') }} ">Create a new one</a></p>
         @else
 
+        @if (session('deleted'))
+        <div class="alert alert-success">
+            <strong> {{ session('deleted') }} </strong> has been successfully deleted 
+        </div>
+        @endif
+
         <table class="table">
             <thead>
                 <tr>
@@ -25,10 +31,16 @@
                             <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-info">Show Post</a>
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.posts.edit', $post->slug) }}" class="btn btn-secondary">Edit Post</a>
+                            <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-secondary">Edit Post</a>
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.posts.destroy', $post->id) }}" class="btn btn-danger">Delete Post</a>
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">
+                                    Delete Post
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

@@ -40,13 +40,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-        ], [
-            'required' => 'The :attribute is a required field!',
-            'max' => 'Max :max characters allowed for the :attribute',
-        ]);
+        // $request->validate([
+        //     'title' => 'required|max:255',
+        //     'content' => 'required',
+        // ], [
+        //     'required' => 'The :attribute is a required field!',
+        //     'max' => 'Max :max characters allowed for the :attribute',
+        // ]);
+        $request->validate($this->validation_rules(), $this->validation_messages());
 
         $data = $request->all();
         
@@ -94,9 +95,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        // $post = Post::find($id);
+
+        if (! $post) {
+            abort(']404');
+        }
+
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -106,9 +113,41 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+         // Validation
+        //  $request->validate([
+        //     'title' => 'required|max:255',
+        //     'content' => 'required',
+        // ], [
+        //     'required' => 'The :attribute is a required field!',
+        //     'max' => 'Max :max characters allowed for the :attribute',
+        // ]);
+        $request->validate($this->validation_rules(), $this->validation_messages());
+
+        $data = $request->all();
+       
+        // update slug if the title has changed
+        if ($data['title'] != $post->title) {
+            $slug = Str::slug($data['title'], '-');
+            $count = 1;
+            $base_slug = $slug;
+
+            // run th cicle if found the post with same slug
+            while (Post::where('slug', $slug)->first()) {
+                // gen new slug with counter
+                $slug .= $base_slug . '-' . $count;
+                $count++;
+            }
+            $data['slug'] = $slug;
+        }
+        else {
+            $data['slug'] = $post->slug;
+        }
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -117,8 +156,26 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }
+
+    // Validation rules
+    private function validation_rules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ];
+    }
+
+    private function validation_messages() {
+        return [
+            'required' => 'The :attribute is a required field!',
+            'max' => 'Max :max characters allowed for the :attribute',
+        ];
+    }
+
 }
