@@ -28,7 +28,7 @@
                             <a href="{{ route('admin.posts.edit', $post->slug) }}" class="btn btn-secondary">Edit Post</a>
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.posts.destroy', $post->slug) }}" class="btn btn-danger">Delete Post</a>
+                            <a href="{{ route('admin.posts.destroy', $post->id) }}" class="btn btn-danger">Delete Post</a>
                         </td>
                     </tr>
                 @endforeach
