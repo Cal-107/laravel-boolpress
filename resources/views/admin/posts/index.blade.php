@@ -27,6 +27,15 @@
                     <tr>
                         <td class="text-center">{{ $post->id }}</td>
                         <td class="text-center">{{ $post->title }}</td>
+                        <td>
+                            @if ($post->category)
+                                <a href="{{ route('admin.category', $post->category->id) }}"> 
+                                    {{ $post->category->name }}
+                                </a>
+                            @else
+                                Uncategorized
+                            @endif
+                        </td>
                         <td class="text-center">
                             <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-info">Show Post</a>
                         </td>
