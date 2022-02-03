@@ -11,4 +11,12 @@ class Post extends Model
        'content',
        'slug',
    ];
+
+   /**
+    * Relation with categories -> posts <---> categories 
+    */
+
+    public function category() {
+        return $this->belongsTo('App\Category');
+    }
 }
