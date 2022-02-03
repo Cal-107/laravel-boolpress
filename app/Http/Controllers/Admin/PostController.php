@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Category;
 use App\Post;
 
 class PostController extends Controller
@@ -28,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-       return view('admin.posts.create');
+       $categories = Category::all();
+       return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -98,12 +100,13 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         // $post = Post::find($id);
+        $categories = Category::all();
 
         if (! $post) {
             abort(']404');
         }
 
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -168,6 +171,7 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
@@ -175,6 +179,7 @@ class PostController extends Controller
         return [
             'required' => 'The :attribute is a required field!',
             'max' => 'Max :max characters allowed for the :attribute',
+            'category_id.exists' => 'Sorry, this category does not exists',
         ];
     }
 

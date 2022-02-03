@@ -10,10 +10,11 @@ class Post extends Model
        'title',
        'content',
        'slug',
+       'category_id',
    ];
 
    /**
-    * Relation with categories -> posts <---> categories 
+    * Relation with categories - posts <---> categories (A single post has one category)
     */
 
     public function category() {

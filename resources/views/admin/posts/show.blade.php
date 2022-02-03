@@ -5,6 +5,14 @@
         <h1 class="mb-5">{{ $post->title }}</h1>
 
         <div class="mb-5">
+            <span>
+                <strong>Category</strong>
+                @if ($post->category)
+                    {{ $post->category->name }}
+                @else
+                    Uncategorized
+                @endif
+            </span>
             <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-warning">Edit</a>
             <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">Back to archive</a>
         </div>
