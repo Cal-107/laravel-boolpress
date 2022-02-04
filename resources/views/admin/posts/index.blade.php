@@ -50,11 +50,31 @@
                                     Delete Post
                                 </button>
                             </form>
-                        </td>
+                        </td>                      
                     </tr>
                 @endforeach
             </tbody>
         </table>
         @endif
+    </section>
+
+    <section class="container">
+        <h2 class="my-4">Posts by Tag</h2>
+        @foreach ($tags as $tag)
+            <h3>{{ $tag->name }}</h3>
+            
+            @if ($tag->posts->isEmpty())
+                <p>Without Tags</p>
+            @else
+                <ul>
+                    @foreach ($tag->posts as $post)
+                        <li>
+                            <a href="{{ route('admin.posts.show', $post->slug) }}"> {{ $post->title }} </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+            <hr>
+        @endforeach
     </section>
 @endsection
