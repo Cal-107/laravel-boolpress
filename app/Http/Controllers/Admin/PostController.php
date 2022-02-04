@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Category;
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -30,7 +31,8 @@ class PostController extends Controller
     public function create()
     {
        $categories = Category::all();
-       return view('admin.posts.create', compact('categories'));
+       $tags = Tag::all();
+       return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -53,6 +55,8 @@ class PostController extends Controller
 
         $data = $request->all();
         
+        // dd($data);
+
         // create new post
         $new_post = new Post();
 
@@ -70,6 +74,11 @@ class PostController extends Controller
 
         $new_post->fill($data);
         $new_post->save();
+
+        // Save in pivot the relation between the new post whith  the tags selected in the form
+        if (array_key_exists('tags', $data)) {
+            $new_post->tags()->attach($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $new_post->slug);
     }
@@ -172,6 +181,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ];
     }
 

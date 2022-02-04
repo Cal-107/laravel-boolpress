@@ -25,5 +25,15 @@
                 Image here
             </div>
         </div>
+
+        @if (!$post->tags->isEmpty())
+            <h4 class="mt-4">Tags</h4>
+
+            @foreach ($post->tags as $tag)
+                <span class="badge badge-primary">{{ $tag->name }}</span>
+            @endforeach
+        @else
+            <p class="mt-4">This post has no tags</p>
+        @endif
     </section>
 @endsection
