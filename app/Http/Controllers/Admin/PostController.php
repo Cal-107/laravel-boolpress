@@ -111,11 +111,13 @@ class PostController extends Controller
         // $post = Post::find($id);
         $categories = Category::all();
 
+        $tags = Tag::all();
+
         if (! $post) {
             abort(']404');
         }
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -158,6 +160,15 @@ class PostController extends Controller
         }
 
         $post->update($data);
+
+        // update pivots relation's between updated post and tags
+        if (array_key_exists('tags', $data)) {
+            // update tags (rows in bridge) : add /remove
+            $post->tags()->sync($data['tags']);
+        } else {
+            // no checkbox for selected tag from the form, so clear
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', $post->slug);
     }
