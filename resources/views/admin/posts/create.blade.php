@@ -53,7 +53,7 @@
                 @foreach ($tags as $tag)
                     <span class="d-inline-block mr-3">
                         <input type="checkbox" name="tags[]" id="tag{{ $loop->iteration }}" value="{{ $tag->id }}"
-                            @if(in_array($tag->id, old('tags', [] ))) checked @endif>
+                            @if (in_array($tag->id, old('tags', [] ))) checked @endif>
                             
                         <label for="tag{{ $loop->iteration }}">
                             {{ $tag->name }}
