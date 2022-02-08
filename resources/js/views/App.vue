@@ -1,7 +1,21 @@
 <template>
-  <div>
-      <h1>Work in progress</h1>
-      <h2>Website under construction</h2>
+  <div class="container mt-5">
+      <h1 class="mb-4">Welcome to our Blog, fool!</h1>
+      <div v-if="posts">
+         <article class="mb-5" v-for="post in posts" :key="`post-${post.id}`">
+            
+            <h3>{{ post.title }}</h3>
+
+            <div class="mb-1">{{ formatDate(post.created_at) }}</div>
+            
+            <p>{{ getExcerpt(post.content, 150) }}</p>
+
+         </article>
+      </div>
+
+      <div v-else>
+          The posts are coming..
+      </div>
   </div>
 </template>
 
@@ -21,7 +35,28 @@ export default {
     },
     methods: {
         getPosts() {
-            console.log('Axios call here')
+            axios.get('http://127.0.0.1:8000/api/posts/')
+                    .then(result => {
+                        console.log(result);
+
+                        // A -> Without Paginations
+                        this.posts = result.data;
+                    })
+        },
+        getExcerpt(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substr(0, maxLength) + '...';
+            }
+
+            return text;
+        },
+        formatDate(postDate) {
+            console.log(postDate);
+            const date = new Date(postDate)
+            console.log(date);
+
+            const dateFormatted = new Intl.DateTimeFormat('it-IT').format(date);
+            return dateFormatted;
         }
     }
 }
