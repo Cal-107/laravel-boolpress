@@ -12,15 +12,25 @@
 
                 <p>{{ getExcerpt(post.content, 150) }}</p>
             </article>
+
+            <!-- Pagination -->
             <button
-                class="btn btn-primary"
+                class="btn btn-primary mr-2"
                 @click="getPosts(pagination.current - 1)"
                 :disabled="pagination.current === 1"
             >
                 Prev
             </button>
 
-            
+            <button
+                v-for="i in pagination.last"
+                :key="`page-${i}`"
+                class="btn mr-2"
+                @click="getPosts(i)"
+                :class="pagination.current === i ? 'btn-primary' : 'btn-danger'"
+            >
+                {{ i }}
+            </button>
 
             <button
                 class="btn btn-primary"
@@ -30,16 +40,19 @@
                 Next
             </button>
         </div>
-        <div v-else>The posts are coming..</div>
+        <Loader v-else />
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import Loader from '../components/Loader';
 
 export default {
     name: "App",
-    components: {},
+    components: {
+        Loader,
+    },
     data() {
         return {
             posts: null,
