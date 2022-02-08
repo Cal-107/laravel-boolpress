@@ -6,9 +6,24 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'App',
-    components: {}
+    components: {},
+    data() {
+        return {
+            posts: null,
+        }
+    },
+    created() {
+        this.getPosts()
+    },
+    methods: {
+        getPosts() {
+            console.log('Axios call here')
+        }
+    }
 }
 </script>
 
