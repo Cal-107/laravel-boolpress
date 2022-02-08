@@ -76,7 +76,7 @@ class PostController extends Controller
         $new_post->fill($data);
         $new_post->save();
 
-        // Save in pivot the relation between the new post whith  the tags selected in the form
+        // Save in pivot the relation between the new post with the tags selected in the form
         if (array_key_exists('tags', $data)) {
             $new_post->tags()->attach($data['tags']);
         }

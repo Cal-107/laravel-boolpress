@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Test route API
+Route::get('/test', function() {
+    return response()->json([
+        'clients' => ['Jax', 'Tommy', 'Walter'],
+        'Type' => 'Premium',
+    ]);
+});
+
+// Create a endpoint for the Api's
+Route::namespace('Api')->group(function() {
+    // Post archive
+    Route::get('/posts', 'PostController@index');
 });
