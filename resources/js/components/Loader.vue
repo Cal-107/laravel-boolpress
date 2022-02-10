@@ -1,10 +1,13 @@
 <template>
-    <div>The posts are coming..</div>
+    <h1>{{ text }}</h1>
 </template>
 
 <script>
 export default {
     name: "Loader",
+    props: {
+        text: String
+    }
 };
 </script>
 

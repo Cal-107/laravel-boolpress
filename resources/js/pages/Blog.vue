@@ -11,6 +11,10 @@
                 <div class="mb-1">{{ formatDate(post.created_at) }}</div>
 
                 <p>{{ getExcerpt(post.content, 150) }}</p>
+
+                <router-link :to="{ name: 'post-detail', params: { slug: post.slug } }">
+                    Read More
+                </router-link>
             </article>
 
             <!-- Pagination -->
@@ -40,7 +44,7 @@
                 Next
             </button>
         </div>
-        <Loader v-else />
+        <Loader text="Loading post archive" v-else />
     </div>
 </template>
 
@@ -49,7 +53,7 @@ import axios from "axios";
 import Loader from '../components/Loader';
 
 export default {
-    name: "App",
+    name: "Blog",
     components: {
         Loader,
     },

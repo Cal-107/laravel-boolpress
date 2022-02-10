@@ -1,6 +1,7 @@
 <template>
-  <section class="container">
-      This is the homepage
+  <section class="container mt-5">
+      <h1> This is the homepage</h1>
+      <p>Welcome to Blog, Fool!</p>
   </section>
 </template>
 
