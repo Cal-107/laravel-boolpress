@@ -4,6 +4,8 @@
     <section class="container">
         <h1 class="mb-5">{{ $post->title }}</h1>
 
+        <h2 class="my-3">{{ $post->created_at->isoFormat('dddd DD/MM/YYYY, HH:mm:ss a') }}</h2>
+
         <div class="mb-5">
             <span>
                 <strong>Category</strong>
