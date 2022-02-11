@@ -21,7 +21,7 @@ class PostController extends Controller
     public function show($slug) {
         // Take  post by Slug
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
-
+              
         if (! $post) {
             $post['not_found'] = true;
         }
