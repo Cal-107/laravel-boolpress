@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.posts.update', $post->id) }}" method="POST">
+        <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
@@ -69,7 +69,17 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
 
-            <button class="btn btn-primary" type="submit">Edit Post</button>
+                
+                {{-- Post Cover Image --}}
+                <div class="mb-5">
+                    <label for="cover" class="form-label">Post Image</label>
+                    <input class="form-control-file" type="file" name="cover" id="cover">
+                    @error('cover')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button class="btn btn-primary" type="submit">Edit Post</button>
         </form>
     </section>
 @endsection

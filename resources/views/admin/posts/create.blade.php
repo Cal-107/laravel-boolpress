@@ -70,6 +70,9 @@
             <div class="mb-5">
                 <label for="cover" class="form-label">Post Image</label>
                 <input class="form-control-file" type="file" name="cover" id="cover">
+                @error('cover')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <button class="btn btn-primary" type="submit">Create Post</button>

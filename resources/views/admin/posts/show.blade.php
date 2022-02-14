@@ -20,12 +20,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="{{ $post->cover ? 'col-md-6' : 'col' }}">
                 {!! $post->content !!}
             </div>
-            <div class="col-md-6">
-                <img class="img-fluid" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
-            </div>
+            @if ($post->cover)
+                <div class="col-md-6">
+                    <img class="img-fluid" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                </div>
+            @endif
         </div>
 
         @if (!$post->tags->isEmpty())

@@ -147,6 +147,16 @@ class PostController extends Controller
         $request->validate($this->validation_rules(), $this->validation_messages());
 
         $data = $request->all();
+
+        // add / update imgs post, if exists
+        if (array_key_exists('cover', $data)) {
+            // remove if cover already exists
+            if ($post->cover) {
+                Storage::delete($post->cover);
+            }
+
+            $data['cover'] = Storage::put('post-covers', $data['cover']);
+        }
        
         // update slug if the title has changed
         if ($data['title'] != $post->title) {
@@ -188,6 +198,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // check if cover already exists
+        if ($post->cover) {
+            Storage::delete($post->cover);
+        }
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);
