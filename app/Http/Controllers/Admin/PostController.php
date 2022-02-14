@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Category;
 use App\Post;
 use App\Tag;
@@ -57,6 +58,11 @@ class PostController extends Controller
         $data = $request->all();
         
         // dd($data);
+
+        if (array_key_exists('cover', $data)) {
+            $img_path = Storage::put('post-covers', $data['cover']);
+            $data['cover'] = $img_path;
+        }
 
         // create new post
         $new_post = new Post();
@@ -194,6 +200,7 @@ class PostController extends Controller
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
+            'cover' => 'nullable|file|mimes:jpeg,bmp,png'
         ];
     }
 

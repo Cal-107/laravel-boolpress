@@ -24,7 +24,7 @@
                 {!! $post->content !!}
             </div>
             <div class="col-md-6">
-                Image here
+                <img class="img-fluid" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
             </div>
         </div>
 
