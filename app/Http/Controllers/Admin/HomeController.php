@@ -5,10 +5,36 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
+use Illuminate\Support\Facades\Mail; // <------- !!!
+use Illuminate\Support\Facades\Auth;
+use App\Mail\SendWelcomeEmail; // <------- !!!
+
 class HomeController extends Controller
 {
     // Admin Homepage
     public function index() {
+
+        // Test sending mail
+        // Mail::to('account@mail.it')->send(new SendWelcomeEmail());
+
+        // Test AUTH
+        // Mail::to(Auth::user()->email)->send(new SendWelcomeEmail(Auth::user()->name));
+
+        Mail::to(Auth::user()->email)->send(new SendWelcomeEmail(Auth::user()->name));
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Carbon
         // $now = Carbon::now();
