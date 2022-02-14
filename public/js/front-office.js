@@ -2203,11 +2203,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'PostDetail',
+  name: "PostDetail",
   components: {
     Loader: _components_Loader__WEBPACK_IMPORTED_MODULE_1__["default"],
     Tags: _components_Tags__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -2227,7 +2235,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts/".concat(this.$route.params.slug)).then(function (result) {
         if (result.data.not_found) {
           _this.$router.push({
-            name: 'not-found'
+            name: "not-found"
           });
         } else {
           _this.post = result.data;
@@ -3868,15 +3876,23 @@ var render = function () {
                 attrs: { list: _vm.post.tags },
               }),
               _vm._v(" "),
+              _vm.post.cover
+                ? _c("figure", [
+                    _c("img", {
+                      attrs: { src: _vm.post.cover, alt: _vm.post.title },
+                    }),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("p", [_vm._v(_vm._s(_vm.post.content))]),
               _vm._v(" "),
               _c(
                 "router-link",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { to: { name: "home" } },
+                  attrs: { to: { name: "blog" } },
                 },
-                [_vm._v("Back To Blog")]
+                [_vm._v("\n            Back To Blog\n        ")]
               ),
             ],
             1
